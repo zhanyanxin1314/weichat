@@ -1,0 +1,21 @@
+<div class="fui-navbar">
+
+    <a href="{if empty($_GPC['merchid'])}{php echo mobileUrl()}{else}{php echo mobileUrl('merch')}{/if}" class="external nav-item {if $_W['routes']=='' ||  $_W['routes']=='shop' ||  $_W['routes']=='commission.myshop'}active{/if}">
+        <span class="icon icon-home"></span>
+        <span class="label">首页</span>
+    </a>
+    
+    
+    {if !empty($commission)}
+    <a href="{$commission['url']}" class="external nav-item {if $_W['routes']=='commission.register'}active{/if}">
+        <span class="icon icon-fenxiao2"></span>
+        <span class="label">{$commission['text']}</span>
+    </a>
+    {/if}
+    
+    <a href="{php echo mobileUrl('member')}" class="external nav-item  {if $_W['routes']=='member'}active{/if}">
+        <span class="icon icon-person2"></span>
+        <span class="label">会员中心</span>
+    </a>
+</div>
+

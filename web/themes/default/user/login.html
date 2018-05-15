@@ -1,0 +1,67 @@
+{template 'common/header-base'}
+<div class="system-login" {if !empty($_W['setting']['copyright']['background_img'])} style="background-image:url('{php echo tomedia($_W['setting']['copyright']['background_img']);}')" {else} style="background-image: url('https://img.alicdn.com/imgextra/i4/620941550/TB2WnfiiLBNTKJjSszcXXbO2VXa_!!620941550.png');" {/if}>
+
+	<div class="head">
+		<a href="/" class="logo-version">
+			<img src="{if !empty($_W['setting']['copyright']['blogo'])}{php echo tomedia($_W['setting']['copyright']['blogo'])}{else}./resource/images/logo/logo.png{/if}" class="logo">
+			<span class="version hidden">{IMS_VERSION}</span>
+		</a>
+		{if !empty($_W['setting']['copyright']['showhomepage'])}
+		<a href="{php echo url('account/welcome')}" class="pull-right">首页</a>
+		{/if}
+	</div>
+	<div class="login-panel">
+		<div class="title">账号密码登录</div>
+		<form action="" method="post" role="form" id="form1" onsubmit="return formcheck();" class="we7-form">
+			<div class="input-group-vertical">
+				<input name="username" type="text" class="form-control " placeholder="请输入用户名登录">
+				<input name="password" type="password" class="form-control password" placeholder="请输入登录密码">
+				{if !empty($_W['setting']['copyright']['verifycode'])}
+				<div class="input-group">
+					<input name="verify" type="text" class="form-control" placeholder="请输入验证码">
+					<a href="javascript:;" id="toggle" class="input-group-btn imgverify"><img id="imgverify" src="{php echo url('utility/code')}" title="点击图片更换验证码" /></a>
+				</div>
+				{/if}
+			</div>
+			<div class="checkbox">
+				<input type="checkbox" value="true" id="rember" name="rember">
+				<label for="rember">记住用户名</label>
+			</div>
+			<div class="login-submit text-center">
+				<input type="submit" id="submit" name="submit" value="登录" class="btn btn-primary btn-block" />
+				<div class="text-right">
+					{if !$_W['siteclose'] && $setting['register']['open']}
+						<a href="{url 'user/register'}" class="color-default">立即注册</a>
+					{/if}
+				</div>
+				<input name="token" value="{$_W['token']}" type="hidden" />
+			</div>
+		</form>
+	</div>
+</div>
+{template 'common/footer-base'}
+<script>
+function formcheck() {
+	if($('#remember:checked').length == 1) {
+		cookie.set('remember-username', $(':text[name="username"]').val());
+	} else {
+		cookie.del('remember-username');
+	}
+	return true;
+}
+var h = document.documentElement.clientHeight;
+$(".system-login").css('height',h);
+$('#toggle').click(function() {
+	$('#imgverify').prop('src', '{php echo url('utility/code')}r='+Math.round(new Date().getTime()));
+	return false;
+});
+{if !empty($_W['setting']['copyright']['verifycode'])}
+	$('#form1').submit(function() {
+		var verify = $(':text[name="verify"]').val();
+		if (verify == '') {
+			alert('请填写验证码');
+			return false;
+		}
+	});
+{/if}
+</script>

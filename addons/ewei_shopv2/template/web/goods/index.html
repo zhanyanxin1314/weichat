@@ -1,0 +1,134 @@
+{template '_header'}
+<style>
+    .newgoodsflag{
+        width: 18px;height: 16px;
+        background-color: #ff0000;
+        color: #fff;
+        text-align: center;
+        position: relative;
+        bottom: 40px;
+        left: 22px;
+        z-index:99;
+        font-size: 12px;
+    }
+</style>
+<div class="page-heading"> 
+    <span class='pull-right'>
+        <a class='btn btn-primary btn-sm' href="{php echo webUrl('goods/add')}"><i class='fa fa-plus'></i> 添加商品</a>
+    </span>
+    <h2>商品列表</h2> </div>
+
+<form action="./index.php" method="get" class="form-horizontal form-search" role="form">
+    <input type="hidden" name="c" value="site" />
+    <input type="hidden" name="a" value="entry" />
+    <input type="hidden" name="m" value="ewei_shopv2" />
+    <input type="hidden" name="do" value="web" />
+    <input type="hidden" name="r"  value="goods" />
+    <input type="hidden" name="goodsfrom" value="{$goodsfrom}" />
+    <div class="page-toolbar row m-b-sm m-t-sm">
+
+
+        <div class="col-sm-8 pull-right">
+
+            <div class="input-group">				 
+                <input type="text" class="input-sm form-control" name='keyword' value="{$_GPC['keyword']}" placeholder="ID/名称/编号/条码"> <span class="input-group-btn">
+                    		
+                    <button class="btn btn-sm btn-primary" type="submit"> 搜索</button> </span>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+{if count($list)>0 && cv('goods.main')}
+<table class="table table-hover table-responsive"> 
+    <thead class="navbar-inner">
+        <tr>
+            <th style="width:25px;"><input type='checkbox' /></th>
+            <th style="width:60px;text-align:center;">排序</th>
+            <th style="width:60px;">商品</th>
+            <th  style="width:200px;">&nbsp;</th>
+            <th style="width:90px;" >价格</th>
+            <th style="width:70px;" >库存</th>
+            <th style="width:80px;" >销量</th>
+            <th  style="width:60px;" >状态</th>
+            <th style="width:70px;">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {loop $list $item}
+        <tr>
+            <td>
+                <input type='checkbox'  value="{$item['id']}"/>
+            </td>
+            <td style='text-align:center;'>
+                <a href='javascript:;' >{$item['displayorder']}</a>
+            </td>
+            <td>
+                <img src="{php echo tomedia($item['thumb'])}" class="imgg" style="width:40px;height:40px;padding:1px;border:1px solid #ccc;"  />
+            </td>
+            <td class='full' style="overflow-x: hidden">
+                {if !empty($category[$item['pcate']])}
+                	<span class="text-danger">[{$category[$item['pcate']]['name']}]</span>
+                {/if}
+                {if !empty($category[$item['ccate']])}
+                	<span class="text-info">[{$category[$item['ccate']]['name']}]</span>
+                {/if}
+                {if !empty($category[$item['tcate']]) && intval($shopset['catlevel'])==3}
+                	<span class="text-info">[{$category[$item['tcate']]['name']}]</span>
+                {/if}
+                <br/>
+                <a href='javascript:;' >{$item['title']}</a>
+            </td>
+
+            <td>
+
+                <a href='javascript:;' >{$item['marketprice']}</a>
+
+            </td>
+
+            <td>
+                        <a href='javascript:;' >{$item['total']}</a>
+            </td>
+            <td>{$item['salesreal']}</td>
+
+            {if $goodsfrom!='cycle'}
+            <td  style="overflow:visible;">
+                
+                <span class='label {if $item['status']==1}label-success{else}label-default{/if}' 
+                      {ifp 'goods.edit'}
+                      data-toggle='ajaxSwitch' 
+                      data-confirm = "确认是{if $item['status']==1}下架{else}上架{/if}？"
+                      data-switch-refresh='true'
+                      data-switch-value='{$item['status']}'
+                      data-switch-value0='0|下架|label label-default|{php echo webUrl('goods/status',array('status'=>1,'id'=>$item['id']))}'  
+                      data-switch-value1='1|上架|label label-success|{php echo webUrl('goods/status',array('status'=>0,'id'=>$item['id']))}'  
+                      {/if}
+                      >
+                      {if $item['status']==1}上架{else}下架{/if}</span>
+               
+                </td>
+                {/if}
+                <td  style="overflow:visible;position:relative">
+                        <a  class='btn btn-default btn-sm' href="{php echo webUrl('goods/edit', array('id' => $item['id'],'goodsfrom'=>$goodsfrom,'page'=>$page))}" title="{ifp 'goods.edit'}编辑{else}查看{/if}"><i class='fa fa-edit'></i> </a>
+
+                        <a  class='btn btn-default btn-sm' data-toggle='ajaxRemove' href="{php echo webUrl('goods/delete1', array('id' => $item['id']))}" data-confirm='如果此商品存在购买记录，会无法关联到商品, 确认要彻底删除吗?？'><i class='fa fa-remove'></i> </a>
+
+
+
+                    </td>
+                </tr>
+
+                            {/loop}
+                           </tbody>
+                          </table>
+                          {$pager}
+                          {else}
+                          <div class='panel panel-default'>
+                              <div class='panel-body' style='text-align: center;padding:30px;'>
+                                  暂时没有任何商品!
+                              </div>
+                          </div>
+                          {/if}
+                          {template '_footer'}
+

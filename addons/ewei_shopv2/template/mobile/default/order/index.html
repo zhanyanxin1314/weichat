@@ -1,0 +1,109 @@
+{template '_header'}
+<style>
+     .fui-list-group-title.lineblock2:before{
+        content: "";
+        position: absolute;
+        left: .5rem;
+        bottom: 0;
+        right: .5rem;
+        height: 1px;
+        border-top: 1px solid #ebebeb;
+        -webkit-transform-origin: 0 100%;
+        -ms-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+        -webkit-transform: scaleY(0.5);
+        -ms-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+    }
+
+</style>
+<div class='fui-page order-list-page '>
+    <div class="fui-header">
+        <div class="fui-header-left">
+            <a class="back"></a>
+        </div>
+        <div class="title">我的订单</div>
+        <div class="fui-header-right">
+            <a class="icon icon-delete external">回收站</a>
+        </div>
+    </div>
+
+    <div id="tab" class="fui-tab fui-tab-danger">
+        <a data-tab="tab"  class="external {if $_GPC['status']==''}active{/if}" data-status=''>全部</a>
+        <a data-tab="tab0" class="external {if $_GPC['status']=='0'}active{/if}"  data-status='0'>待付款</a>
+        <a data-tab="tab1" class="external {if $_GPC['status']=='1'}active{/if}"  data-status='1'>待发货</a>
+        <a data-tab="tab2" class="external {if $_GPC['status']=='2'}active{/if}"  data-status='2'>待收货</a>
+        <a data-tab="tab3" class="external {if $_GPC['status']=='3'}active{/if}"  data-status='3'>已完成</a>
+    </div>
+
+    <div class='fui-content navbar order-list' >
+
+        <div class='fui-content-inner'>
+            <div class='content-empty' style='display:none;'>
+                <img src="{EWEI_SHOPV2_STATIC}images/nolist.png" style="width: 6rem;margin-bottom: .5rem;"><br/><p style="color: #999;font-size: .75rem">您暂时没有任何订单哦！</p><br/><a href="{php echo mobileUrl()}" class='btn btn-sm btn-danger-o external' style="border-radius: 100px;height: 1.9rem;line-height:1.9rem;width:  7rem;font-size: .75rem">去首页逛逛吧</a>
+            </div>
+
+            <div class='container'></div>
+            <div class='infinite-loading'><span class='fui-preloader'></span><span class='text'> 正在加载...</span></div>
+        </div>
+    </div>
+
+    <script id='tpl_order_index_list' type='text/html'>
+
+        <%each list as order%>
+        <div class='fui-list-group order-item' data-orderid="<%order.id%>" data-verifycode="<%order.verifycode%>">
+            <a href="{php echo mobileUrl('order/detail')}&id=<%order.id%>" data-nocache='true'>
+                <div class='fui-list-group-title lineblock2 '>
+                    订单号: <%order.ordersn%>
+                    <span class='status <%order.statuscss%>'><%order.statusstr%></span>
+                </div>
+                <%each order.goods[0].goods as g%>
+                <div class="fui-list goods-list">
+                    <div class="fui-list-media" style="<%if g.status==2%><%/if%>">
+                        <img data-lazy="<%g.thumb%>" class="">
+                    </div>
+                    <div class="fui-list-inner">
+                        <div class="text goodstitle towline"><%g.title%></div>
+
+                    </div>
+                    <div class='fui-list-angle'>
+                        &yen; <span class='marketprice'><%g.price/g.total%><br/>    <span style="color: #999">x<%g.total%></span>
+                    </div>
+
+                </div>
+
+                <%/each%>
+
+                <div class='fui-list-group-title lineblock'>
+                    <span class='status noremark'>共 <span><%order.goods.length%></span> 个商品 实付: <span class='text-danger'>&yen; <span class="bigprice"><%order.price%></span></span></span>
+                </div>
+            </a>
+            <div class='fui-list-group-title lineblock   opblock' >
+        <span class='status noremark'>
+
+        <%if order.userdeleted==0%>
+      <%if order.status==0%>
+        <%if order.paytype!=3%>
+        <a class="btn btn-sm btn-danger-o external" href="{php echo mobileUrl('order/pay')}&id=<%order.id%>" data-nocache="true" >支付订单</a>
+        <%/if%>
+    <%/if%>
+
+    <%if order.status==2%>
+    <div class="btn btn-sm btn-danger-o order-finish" data-orderid="<%order.id%>">确认收货</div>
+    <%/if%>
+
+        <%/if%>
+
+        </span>
+            </div>
+        </div>
+        <%/each%>
+    </script>
+    <script language='javascript'>require(['biz/order/list'], function (modal) {
+        modal.init({fromDetail:false,status:"{$_GPC['status']}",merchid:{php echo intval($_GPC['merchid'])}});
+    });</script>
+
+    {php $this->footerMenus()}
+</div>
+
+{template '_footer'}

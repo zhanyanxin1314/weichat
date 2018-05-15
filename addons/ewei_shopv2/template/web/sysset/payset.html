@@ -1,0 +1,154 @@
+{template '_header'}
+
+<style>
+    .tabs-container .tab-pane .panel-body {border-left: none; border-right: none; border-bottom: none;}
+</style>
+
+<form action="" method="post" class="form-horizontal form-validate" enctype="multipart/form-data" >
+    <div class="page-heading">
+        <span class="pull-right">
+            {ifp 'sysset.payset.edit'}
+                <input type="submit" value="提交" class="btn btn-primary"  />
+            {/if}
+        </span>
+        <h2>支付方式</h2>
+    </div>
+
+    {if $resp['code']!=200}
+    <div class="alert alert-danger">
+        <p style="font-size:18px;font-weight: bold;word-break: break-all">{$url} 访问受限, 请检查您的服务器设置</p>
+        <p style="font-size:18px;font-weight: bold;word-break: break-all">HTTP 错误代码: {$resp['code']}</p>
+    </div>
+    {/if}
+
+    <div class="tabs-container">
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#tab_wechat">支付设置</a></li>
+            <li><a href="#tab_paytype">打款方式</a></li>
+        </ul>
+        <div class="tab-content ">
+
+            <!-- 微信端开始-->
+            <div class="tab-pane  active" id="tab_wechat">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="col-sm-9 col-xs-12">
+                            <h4>商城支付</h4>
+                            <span>
+                            <p class="text text-danger">如果是微信支付，授权目录与“支付选项”中的说明不同，应在 公众平台->微信支付->公众号支付 追加一条支付授权目录: <b>{$_W['siteroot']}app/</b>  </p>
+                            <p class="text text-danger"><b>特约商户一般申请没有订单或者充值余额退款权限,需要 <a href='http://kf.qq.com/faq/120911VrYVrA150929imAfuU.html' target="_blank">点击跳转</a>  在这里申请一下 </b></p>
+                        </span>
+                        </div>
+                        <div class="col-sm-2 pull-right" style="padding-top:10px;text-align: right" >
+                            <input type="checkbox" class="js-switch" name="data[weixin]" value="1" {if $data['weixin']==1}checked{/if} />
+                        </div>
+                    </div>
+                    <div class="panel-body" id='certs' {if empty($data['weixin'])}style="display:none"{/if}>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">选择支付</label>
+                            <div class="col-sm-9 col-xs-12">
+                                {ifp 'sysset.payset.edit'}
+                                <select name='data[weixin_id]' class='form-control'>
+                                    <option value='0'>未选择任何支付</option>
+                                    {loop $payments $val}
+                                    <option value='{$val['id']}' {if $data['weixin_id']==$val['id']}selected{/if}>{$val['title']}</option>
+                                    {/loop}
+                                </select>
+                                {else}
+                                <div class='form-control-static'></div>
+                                {/if}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    <!--微信端 结束-->
+    <!--微信打款方式 开始-->
+    <div class="tab-pane " id="tab_paytype">
+            <div class="panel-body">
+                <div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label must">佣金打款</label>
+                    <div class="col-sm-9">
+                        <label class="radio-inline"><input type="radio" name="data[paytype][commission]" value="1" {if $data['paytype']['commission'] == '1'}checked="checked"{/if}/>红包付款</label>
+                    </div>
+                </div>
+
+                <div class="form-group" >
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label must">提现申请</label>
+                    <div class="col-sm-9">
+                        <label class="radio-inline"><input type="radio" name="data[paytype][withdraw]" value="1" {if $data['paytype']['withdraw'] == '1'}checked="checked"{/if}/>红包付款</label>
+                    </div>
+                </div>
+
+            </div>
+    </div>
+
+
+</div>
+</div>
+
+</form>
+</div>
+
+<script type="text/javascript">
+    require(['bootstrap'], function () {
+        $('#myTab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+    });
+    $(function () {
+        $(":checkbox[name='data[weixin]']").click(function () {
+            var weixin_sub = $(":checkbox[name='data[weixin_sub]']");
+            if ($(this).prop('checked')) {
+                $("#certs").show();
+                if(weixin_sub.next().hasClass("checked")){
+                    weixin_sub.next().click();
+                }
+            }
+            else {
+                $("#certs").hide();
+            }
+        });
+        $(":checkbox[name='data[weixin_jie]']").click(function () {
+            var weixin_jie_sub = $(":checkbox[name='data[weixin_jie_sub]']");
+            if ($(this).prop('checked')) {
+                $("#weixin_jie").show();
+                if(weixin_jie_sub.next().hasClass("checked")){
+                    weixin_jie_sub.next().click();
+                }
+            }
+            else {
+                $("#weixin_jie").hide();
+            }
+        });
+
+        $(":checkbox[name='data[weixin_sub]']").click(function () {
+            var weixin = $(":checkbox[name='data[weixin]']");
+            if ($(this).prop('checked')) {
+                $("#weixin_sub").show();
+                if(weixin.next().hasClass("checked")){
+                    weixin.next().click();
+                }
+            }
+            else {
+                $("#weixin_sub").hide();
+            }
+        });
+
+        $(":checkbox[name='data[weixin_jie_sub]']").click(function () {
+            var weixin_jie = $(":checkbox[name='data[weixin_jie]']");
+            if ($(this).prop('checked')) {
+                $("#weixin_jie_sub").show();
+                if(weixin_jie.next().hasClass("checked")){
+                    weixin_jie.next().click();
+                }
+            }
+            else {
+                $("#weixin_jie_sub").hide();
+            }
+        });
+
+    })
+</script>
+{template '_footer'}     

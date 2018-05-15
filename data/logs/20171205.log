@@ -1,0 +1,16 @@
+2017-12-05 00:38:15 SQL Error :
+------------
+String:
+SQL: <br/> SELECT * FROM `ims_site_store_order` WHERE `endtime` >= :__endtime_8 AND `uniacid` IS NULL AND `type` = :__type_10<hr/>Params: <br/>array (
+  ':__endtime_8' => 1512405495,
+  ':__type_10' => 3,
+)<hr/>SQL Error: <br/>Unknown column 'endtime' in 'where clause'<hr/>Traces: <br/>file: /framework/class/db.class.php; line: 408; <br />file: /framework/class/db.class.php; line: 162; <br />file: /framework/class/db.class.php; line: 206; <br />file: /framework/function/pdo.func.php; line: 58; <br />file: /framework/model/account.mod.php; line: 232; <br />file: /framework/model/account.mod.php; line: 253; <br />file: /framework/model/account.mod.php; line: 303; <br />file: /web/common/common.func.php; line: 155; <br />file: /data/tpl/web/default/common/header.tpl.php; line: 3; <br />file: /data/tpl/web/default/home/welcome-system.tpl.php; line: 1; <br />file: /web/common/template.func.php; line: 29; <br />file: /web/source/home/welcome.ctrl.php; line: 58; <br />file: /web/index.php; line: 102; <br />
+
+2017-12-05 00:38:23 SQL Error :
+------------
+String:
+SQL: <br/> SELECT * FROM `ims_site_store_order` WHERE `endtime` >= :__endtime_9 AND `uniacid` IS NULL AND `type` = :__type_11<hr/>Params: <br/>array (
+  ':__endtime_9' => 1512405503,
+  ':__type_11' => 3,
+)<hr/>SQL Error: <br/>Unknown column 'endtime' in 'where clause'<hr/>Traces: <br/>file: /framework/class/db.class.php; line: 408; <br />file: /framework/class/db.class.php; line: 162; <br />file: /framework/class/db.class.php; line: 206; <br />file: /framework/function/pdo.func.php; line: 58; <br />file: /framework/model/account.mod.php; line: 232; <br />file: /framework/model/account.mod.php; line: 253; <br />file: /framework/model/account.mod.php; line: 303; <br />file: /web/source/site/entry.ctrl.php; line: 74; <br />file: /web/index.php; line: 81; <br />
+

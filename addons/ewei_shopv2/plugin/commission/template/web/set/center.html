@@ -1,0 +1,12 @@
+<div class="form-group">
+    <label class="col-sm-2 control-label">是否关闭分销中心推广二维码</label>
+    <div class="col-sm-9 col-xs-12">
+        {ifp 'commission.set.edit'}
+        <label class="radio-inline"><input type="radio"  name="data[closed_qrcode]" value="0" {if empty($data['closed_qrcode'])} checked="checked"{/if} /> 否</label>
+        <label class="radio-inline"><input type="radio"  name="data[closed_qrcode]" value="1" {if $data['closed_qrcode'] ==1} checked="checked"{/if} /> 是</label>
+        {else}
+        {if empty($data['closed_qrcode'])}否{else}是{/if}
+        {/if}
+    </div>
+</div>
+

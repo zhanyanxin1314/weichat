@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://shop.7rp.cn" versionCode="1.0">
+	<application setting="false">
+		<name><![CDATA[三级分销商城]]></name>
+		<identifie><![CDATA[ewei_shopv2]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[三级分销商城]]></ability>
+		<description><![CDATA[三级分销商城]]></description>
+		<author><![CDATA[传智博客]]></author>
+		<url><![CDATA[http://shop.7rp.cn]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+			<message type="image" />
+			<message type="voice" />
+			<message type="video" />
+			<message type="shortvideo" />
+			<message type="location" />
+			<message type="link" />
+			<message type="subscribe" />
+			<message type="unsubscribe" />
+			<message type="qr" />
+			<message type="trace" />
+			<message type="click" />
+			<message type="view" />
+			<message type="merchant_order" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+			<message type="image" />
+			<message type="voice" />
+			<message type="video" />
+			<message type="shortvideo" />
+			<message type="location" />
+			<message type="link" />
+			<message type="subscribe" />
+			<message type="qr" />
+			<message type="trace" />
+			<message type="click" />
+			<message type="merchant_order" />
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="商城入口" do="mobile" state="" direct="false" />
+		</cover>
+		<menu call="getMenus">
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

@@ -1,0 +1,19 @@
+<style type='text/css'>
+	.goods-list a {
+		position: relative; 
+	}
+	.goods-list span  {
+	float:right;margin-right:20px;
+	 
+	}
+</style>
+
+{ifp 'goods'}
+<div class='menu-header'>商品列表</div>
+<ul class='goods-list'>
+    <li {if $_GPC['goodsfrom'] == 'sale'} class="active" {/if}><a href="{php echo webUrl('goods',array('goodsfrom'=>'sale'))}">商品列表</a></li>
+
+</ul>
+{/if}
+
+  

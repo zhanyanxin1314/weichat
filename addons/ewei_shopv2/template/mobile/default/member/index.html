@@ -1,0 +1,51 @@
+{template '_header'}
+<div class='fui-page  fui-page-current'>
+    <div class="fui-header">
+		<div class="fui-header-left">
+			<a class="back" onclick='location.back()'></a>
+		</div>
+		<div class="title">会员中心</div>
+		<div class="fui-header-right"></div>
+	</div>
+
+	<div class='fui-content member-page navbar'>
+		<div style="overflow: hidden;height: 7.5rem;position: relative;background: #fff">
+			<div class="headinfo" style="z-index:100;border: none;">
+				<a class="setbtn" href="{php echo mobileUrl('member/info')}" data-nocache='true'><i class="icon icon-shezhi"></i></a>
+				<div class="child">
+				</div>
+				<div class="child userinfo">
+						<div class="face"><img src="{$member['avatar']}" onerror="this.src='../addons/ewei_shopv2/static/images/noface.png'"/></div>
+						<div class="name">{$member['nickname']}</div>
+			</div>
+			<div class="child">
+			</div>
+		</div>
+		<div class="member_header"></div>
+		</div>
+
+	<div class="fui-cell-group fui-cell-click" style="margin-top: 0">
+		<a class="fui-cell external" href="{php echo mobileUrl('order')}">
+			<div class="fui-cell-icon"><i class="icon icon-dingdan1"></i></div>
+			<div class="fui-cell-text">我的订单</div>
+			<div class="fui-cell-remark" style="font-size: 0.65rem;">查看全部订单</div>
+		</a>
+	</div>
+
+		<div class="fui-cell-group fui-cell-click">
+			<a class="fui-cell" href="{php echo mobileUrl('member/address')}">
+				<div class="fui-cell-icon"><i class="icon icon-dingwei1"></i></div>
+				<div class="fui-cell-text"><p>收货地址管理</p></div>
+				<div class="fui-cell-remark"></div>
+			</a>
+		</div>
+	</div>
+	<script language='javascript'>
+		require(['biz/member/index'], function (modal) {
+			modal.init();
+		});
+	</script>
+</div>
+{php $this->footerMenus()}
+{template '_footer'}
+

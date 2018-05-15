@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+        <meta name="format-detection" content="telephone=no" />
+        <title>三级分销商城</title>
+        <link rel="stylesheet" type="text/css" href="../addons/ewei_shopv2/static/js/dist/foxui/css/foxui.min.css?v=0.2">
+        <link rel="stylesheet" type="text/css" href="../addons/ewei_shopv2/template/mobile/default/static/css/style.css?v=2.0.9">
+
+        <link rel="stylesheet" type="text/css" href="{php echo EWEI_SHOPV2_LOCAL}static/fonts/iconfont.css?v=2017070719">
+        <script src="./resource/js/lib/jquery-1.11.1.min.js"></script>
+       <script src='//res.wx.qq.com/open/js/jweixin-1.1.0.js'></script>
+        <script src="{php echo EWEI_SHOPV2_LOCAL}static/js/require.js"></script>
+        <script src="{php echo EWEI_SHOPV2_LOCAL}static/js/myconfig-app.js"></script>
+        <script language="javascript">require(['core'],function(modal){modal.init({siteUrl: "{$_W['siteroot']}",baseUrl: "{php echo mobileUrl('ROUTES')}"})});</script>
+
+
+
+        {if !is_mobile() && !is_weixin() && !is_h5app()}
+        <style type="text/css">
+            body {
+                position: absolute;;
+                max-width: 750px;  margin:auto;
+            }
+            .fui-navbar {
+                max-width:750px;
+            }
+            .fui-navbar,.fui-footer  {
+                max-width:750px;
+            }
+            .fui-page.fui-page-from-center-to-left,
+            .fui-page-group.fui-page-from-center-to-left,
+            .fui-page.fui-page-from-center-to-right,
+            .fui-page-group.fui-page-from-center-to-right,
+            .fui-page.fui-page-from-right-to-center,
+            .fui-page-group.fui-page-from-right-to-center,
+            .fui-page.fui-page-from-left-to-center,
+            .fui-page-group.fui-page-from-left-to-center {
+                -webkit-animation: pageFromCenterToRight 0ms forwards;
+                animation: pageFromCenterToRight 0ms forwards;
+            }
+        </style>
+        {/if}
+        <style>.danmu {display: none;opacity: 0;}</style>
+    </head>
+
+    <body ontouchstart>
+		<div class='fui-page-group {if is_ios()}statusbar{/if}'>

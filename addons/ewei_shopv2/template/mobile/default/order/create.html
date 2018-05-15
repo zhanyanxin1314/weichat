@@ -1,0 +1,474 @@
+{template '_header'}
+
+<link rel="stylesheet" type="text/css" href="../addons/ewei_shopv2/template/mobile/default/static/css/coupon.css?v=2.0.0">
+
+<link rel="stylesheet" type="text/css" href="../addons/ewei_shopv2/template/mobile/default/static/css/coupon-new.css?v=2017030302">
+
+<style>
+
+    .yen{border:none;height:0.75rem;width:0.75rem;display: inline-block;background: #ff4753;color:#fff;font-size:0.4rem;line-height: 0.8rem;text-align: center;
+
+        font-style: normal;border-radius: 0.75rem;-webkit-border-radius: 0.75rem;}
+
+    .order-create-page .fui-list.goods-item .fui-list-inner{
+
+        height: 3.5rem;
+
+        align-self: center;
+
+    }
+
+    .order-create-page .fui-list.goods-item .fui-list-angle{
+
+        height: 3.5rem;
+
+        align-self: center;
+
+    }
+
+    .order-create-page .fui-list-inner .subtitle{
+
+        display: block;
+
+    }
+
+
+
+    .fui-header a.back2:before {
+
+        content: " ";
+
+        display: inline-block;
+
+        -webkit-transform: rotate(45deg);
+
+        -ms-transform: rotate(45deg);
+
+        transform: rotate(45deg);
+
+        height: 0.5rem;
+
+        width: 0.5rem;
+
+        border-width: 0 0 2px 2px;
+
+        border-color: #666;
+
+        border-style: solid;
+
+        position: relative;
+
+        top:0;
+
+    }
+
+</style>
+
+
+
+<div class='fui-page order-create-page'>
+
+    <div class="fui-header">
+
+        <div class="title">确认订单</div>
+
+        <div class="fui-header-right" data-nomenu="true">&nbsp;</div>
+
+    </div>
+
+    <div class='fui-content  navbar'>
+
+            <!--地址选择-->
+
+            <div class="fui-list-group" id='addressInfo' data-addressid="{php echo intval($address['id'])}" style="    margin: 0 0 .5rem;">
+                {if !empty($address)}
+                    <a  class="fui-list {if empty($address)}external{/if}"
+
+                        {if empty($address)}
+
+                            href="{php echo mobileUrl('member/address/post')}"
+
+                        {else}
+
+                            href="{php echo mobileUrl('member/address/selector')}"
+
+                        {/if}
+
+                    data-nocache="true">
+
+                        <div class="fui-list-media">
+
+                            <i class="icon icon-dingwei" {if empty($address)}style='display:none'{/if}></i>
+
+                        </div>
+
+                        <div class="fui-list-inner" >
+
+                            <div class="title has-address" {if empty($address)}style='display:none'{/if}>
+
+                            收货人：
+
+                                <span class='realname'>{$address['realname']}</span>
+
+                                <span class='mobile'>{$address['mobile']}</span>
+
+                            </div>
+
+                            <div class="text has-address" {if empty($address)}style='display:none'{/if}>
+
+                                <span class='address'>{$address['province']}{$address['city']}{$address['area']}{if !empty($new_area) && !empty($address_street)} {$address['street']}{/if} {$address['address']}</span>
+
+                            </div>
+
+                            <div class="text no-address" {if !empty($address)}style='display:none'{/if}><i class="icon icon-icon02"></i> 添加收货地址</div>
+
+                        </div>
+
+                        <div class="fui-list-angle">
+
+                            <div class="angle"></div>
+
+                        </div>
+
+                    </a>
+
+                {else}
+
+                    <a  id='address-show' class="fui-list"    data-nocache="true">
+
+                        <div class="fui-list-inner" >
+
+                            <div class="text no-address" {if !empty($address)}style='display:none'{/if}><i class="icon icon-icon02"></i> 添加收货地址</div>
+
+                        </div>
+
+                        <div class="fui-list-angle">
+
+                            <div class="angle"></div>
+
+                        </div>
+
+                    </a>
+
+                {/if}
+
+            </div>
+
+
+<div class="fui-list-group" >
+
+    {php $i=0}
+
+
+
+
+
+    {loop $goods_list $key $list}
+
+    {if $i !=0 }
+
+        <div style="height: .5rem;background: #f3f3f3"></div>
+
+    {/if}
+
+    {php $i++}
+
+
+    {loop $list['goods'] $g}
+
+    <input type='hidden' name='goodsid[]' value="{$g['id']}" />
+
+
+    <div class="fui-list goods-item align-start">
+
+        <div class="fui-list-media">
+
+            <a href="{php echo mobileUrl('goods/detail',array('id'=>$g['goodsid']))}">
+
+               <img id="" class="round" src="{php echo tomedia($g['thumb'])}">
+
+            </a>
+
+        </div>
+
+        <div class="fui-list-inner">
+
+            <a href="{php echo mobileUrl('goods/detail',array('id'=>$g['goodsid']))}">
+
+                <div class="subtitle">
+
+
+                    {$g['title']}
+		   
+
+                </div>
+            </a>
+
+        </div>
+
+        <div class="fui-list-angle"style="width: auto">
+
+            <span style="font-size: .65rem;color: #000">￥<span class="marketprice">{if $g['marketprice'] > $g['unitprice']}{php echo price_format($g['marketprice'],2)}{else}{php echo price_format($g['marketprice'],2)}{/if}</span></span>
+
+            <div class="num">
+
+                x{$g['total']}<input class="num shownum" type="hidden" name="" value="{$total}"/>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {/loop}
+
+    {/loop}
+
+
+    <div class='fui-cell-group' style="margin-top: 0">
+
+    <div class="fui-cell  lineblock ">
+
+        <div class="fui-cell-info c000" style="text-align: right;">共 <span id='goodscount' class='text-danger bigprice'>{$total}</span> 件商品 共计：<span class="text-danger bigprice">&yen; <span class='{if !$packageid && empty($exchangeOrder)}goodsprice{/if}'>{php echo price_format($goodsprice,2)}</soan></span></div>
+
+    </div>
+
+
+
+</div>
+
+</div>
+
+
+
+<div class="fui-cell-group">
+
+    <input type="hidden" id="weight" name='weight' value="{$weight}" />
+
+
+    <div class="fui-cell">
+
+        <div class="fui-cell-label" >商品小计</div>
+
+        <div class="fui-cell-info"></div>
+
+        <div class="fui-cell-remark noremark">&yen; <span>
+
+           {php echo price_format($goodsprice,2)}
+
+        </span></div>
+
+    </div>
+
+</div>
+
+
+
+</div>
+<div class="fui-navbar order-create-checkout">
+
+    <a href="javascript:;" class="nav-item total">
+
+
+    </a>
+
+    <a href="javascript:;" class="nav-item btn btn-danger buybtn">立即支付</a>
+
+</div>
+
+
+
+
+
+<!-- 放弃付款--><!--class="fui-mask visible"-->
+
+<div id="giveUp"  style="display:none">
+
+    <div class="giveUp-alert">
+
+        <div class="giveUp-title">确定要放弃付款吗？</div>
+
+        <div class="giveUp-subtitle">喜欢的商品可能随时会被抢空哦</div>
+
+        <div class="giveUp-btn">
+
+            <a class="btn btn-default block cancel">取消</a>
+
+            <a class="btn btn-default block cancel back" style="color: #ff5555;border-left:0;">确定</a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div id="addaddress"   style="display:none">
+
+    <div class="address-alert">
+
+        <div class="address-title">请填写收货地址哦！</div>
+
+        <div class="fui-cell-group" style="margin-top:0">
+
+            <div class="fui-cell">
+
+                <div class="fui-cell-label">收货人</div>
+
+                <div class="fui-cell-info c000">
+
+                    <input type="text" id="realname" name="realname" value="" placeholder="请填写收货人姓名" class="fui-input"></div>
+
+            </div>
+
+            <div class="fui-cell">
+
+                <div class="fui-cell-label">手机号</div>
+
+                <div class="fui-cell-info c000">
+
+                    <input type="tel" id="mobile" name="mobile" value="" placeholder="联系电话" class="fui-input">
+
+                </div>
+
+            </div>
+
+            <div class="fui-cell">
+
+                <div class="fui-cell-label">选择地区</div>
+
+                <div class="fui-cell-info c000">
+
+                    <input type="text" id='areas'  name='areas' data-value="" value="" placeholder="所在地区"  class="fui-input" readonly=""/>
+
+                </div>
+
+                <div class="fui-cell-remark noremark"><i class="icon icon-arrow-down" style="font-size:.8rem;color:#b2b2b2"></i> </div>
+
+            </div>
+
+
+
+            {if !empty($new_area) && !empty($address_street)}
+
+            <div class='fui-cell'>
+
+                <div class='fui-cell-label'>所在街道</div>
+
+                <div class='fui-cell-info c000'>
+
+                    <input type="text" id='street'  name='street' data-value="" value="" placeholder="所在街道"  class="fui-input" readonly=""/>
+
+                </div>
+
+            </div>
+
+            {/if}
+
+
+
+            <div class="fui-cell fui-cell-textarea">
+
+                <div class="fui-cell-label " style="margin:0">
+
+                    详细地址
+
+                </div>
+
+                <div class="fui-cell-info c000">
+
+                    <textarea rows="2" id='addresss' name='address' placeholder="请写门牌号等"></textarea>
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+        <a id="btn-submit" class=" btn btn-danger disable block">保存地址</a>
+
+        <i class="icon icon-guanbi1" id="address-colse" style="font-size:1.5rem;color:#fff;position: absolute;top:105%;left:46%"></i>
+
+    </div>
+
+</div>
+<script language='javascript'>
+    require(['biz/order/create'], function (modal) {
+
+    modal.init({php echo json_encode($createInfo)});
+
+    {if !$followed && !empty($share['followqrcode'])}
+
+        $("#attention").css("display","block");
+
+    {/if}
+
+
+
+    $("#attention-colse").click(function(){
+
+        $("#attention").addClass("shut")
+
+        setTimeout(function(){
+
+            $("#attention").css("display","none")
+
+
+
+            $("#attention").removeClass("shut")
+
+        },1000)
+
+    })
+
+
+
+    $(".back2").click(function(){
+
+        $("#giveUp").css("display","block")
+
+    })
+
+    $("#giveUp .cancel").click(function(){
+
+        $("#giveUp").css("display","none")
+
+    })
+
+
+
+    $("#address-colse").click(function(){
+
+        $("#addaddress").addClass("shut")
+
+        setTimeout(function(){
+
+            $("#addaddress").css("display","none")
+
+
+
+            $("#addaddress").removeClass("shut")
+
+        },1000)
+
+    })
+
+    $("#address-show").click(function(){
+
+        $("#addaddress").css("display","block")
+
+    })
+
+
+
+});</script>
+
+</div>
+
+{template '_footer'}
+
+
+

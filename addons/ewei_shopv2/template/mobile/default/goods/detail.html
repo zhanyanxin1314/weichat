@@ -1,0 +1,71 @@
+{template '_header'}
+
+<div class='fui-page fui-page-current  page-goods-detail' id='page-goods-detail-index'>
+    <div class="fui-header">
+        <div class="fui-header-left">
+            <a class="back" id="btn-back"></a>
+        </div>
+        <div class="title">
+            <div id="tab" class="fui-tab fui-tab-danger">
+                <a data-tab="tab1" class="tab active">商品</a>
+                <a data-tab="tab2" class="tab">详情</a>
+            </div>
+        </div>
+        <div class="fui-header-right"></div>
+    </div>
+
+
+    <div class="fui-content detail-block">
+        <div class='content-block content-images'></div>
+    </div>
+
+<div class='fui-content basic-block pulldown'>
+
+
+
+   <div class='fui-swipe goods-swipe'>
+
+     <div class='fui-swipe-wrapper'>
+        {loop $thumbs $thumb}
+         <div class='fui-swipe-item'>
+		<img   data-lazy="{php echo tomedia($thumb)}" />
+	</div>
+        {/loop}
+     </div>
+     <div class='fui-swipe-page'></div>
+  </div>
+
+
+  <div class="fui-cell-group fui-detail-group" >
+    <div class="fui-cell goods-subtitle">
+        <span class='text-danger'>{$goods['title']}</span>
+    </div>
+
+     <div class="fui-cell">
+        <div class="fui-cell-text price" >
+		<span class="text-danger" style="vertical-align: middle;">
+                      &yen;{$goods['marketprice']}
+	        </span>
+        </div>
+      </div>
+</div>
+
+</div>
+
+
+<div class="fui-navbar bottom-buttons">
+         <a  class="nav-item btn buybtn"  data-type="{$goods['type']}">立刻购买</a>
+
+</div>
+{template 'goods/picker'}
+
+<script language="javascript">
+    require(['biz/goods/detail'], function (modal) {
+        modal.init({
+            goodsid:"{$goods['id']}"
+        });
+    });
+</script>
+</div>
+
+{template '_footer'}

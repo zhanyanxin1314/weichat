@@ -1,0 +1,43 @@
+{template '_header'}
+<div class="page-heading"> <h2>会员详情</h2> </div>
+
+<form {if 'member.list.edit'}action="" method='post'{/if} class='form-horizontal form-validate'>
+ <input type="hidden" name="referer" value="{php echo referer()}" />
+	<div class="tabs-container">
+
+		<div class="tabs">
+			<ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" href="#tab-basic" aria-expanded="true"> 基本信息</a></li>
+				<li class=""><a data-toggle="tab" href="#tab-trade" aria-expanded="false"> 交易信息</a></li>
+				
+                               
+				<li class=""><a data-toggle="tab" href="#tab-commission" aria-expanded="false"> 分销商信息</a></li>
+
+
+
+			</ul>
+			<div class="tab-content ">
+				<div id="tab-basic" class="tab-pane active">{template 'member/detail/basic'}</div>
+				<div id="tab-trade" class="tab-pane">{template 'member/detail/trade'}</div>
+
+				<div id="tab-commission" class="tab-pane">
+                    {template 'member/detail/commission'}
+                </div>
+				
+			</div>
+		</div>
+	</div>
+	<div class="form-group"></div>	
+          <div class="form-group">
+		<label class="col-sm-2 control-label"></label>
+		<div class="col-sm-9 col-xs-12">
+			{ifp 'member.list.edit'}
+			<input type="submit"  value="提交" class="btn btn-primary" />
+			{/if}
+			<input type="button" class="btn btn-default" name="submit" onclick="history.go(-1)" value="返回列表" {ifp 'member.list.edit'}style='margin-left:10px;'{/if} />
+		</div>
+	</div>
+
+</form>
+
+{template '_footer'}

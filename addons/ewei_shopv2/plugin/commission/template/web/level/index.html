@@ -1,0 +1,44 @@
+ {template '_header'}
+ <div class="page-heading"> 
+	
+	<span class='pull-right'>
+                            <a class='btn btn-primary btn-sm' data-toggle='ajaxModal' href="{php echo webUrl('commission/level/add')}"><i class="fa fa-plus"></i> 添加新等级</a>
+                 
+	</span>
+	<h2>分销商等级</h2> 
+</div>
+ 
+            <table class="table table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <th style='width:160px;'>等级名称</th>
+                        <th style='width:100px;'>一级佣金比例</th>
+                        <th style='width:100px;'>二级佣金比例</th>
+                        <th style='width:100px;'>三级佣金比例</th>
+                        <th>升级条件</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {loop $list $row}
+                    <tr {if $row['id']=='default'}style='background:#f2f2f2'{/if}>
+                        <td>{$row['levelname']}</td>
+                        <td>{php echo number_format((float)$row['commission1'],2)}%</td>
+                        <td>{php echo number_format((float)$row['commission2'],2)}%</td>
+                        <td>{php echo number_format((float)$row['commission3'],2)}%</td>
+                          <td>	
+					默认等级
+                          </td>
+                        <td>
+							{ifp 'commission.level.edit'}
+                            <a class='btn btn-default btn-sm' data-toggle='ajaxModal'  href="{php echo webUrl('commission/level/edit', array('id' => $row['id']))}" title="{ifp 'commission.level.edit'}编辑{else}查看{/if}"><i class='fa fa-edit'></i> {ifp 'commission.level.edit'}编辑{else}查看{/if}</a>
+                            {/if} 
+
+                    </tr>
+                    {/loop}
+                
+                </tbody>
+            </table>
+ {template '_footer'}
+
+

@@ -1,0 +1,111 @@
+{template '_header'}
+<script>document.title = "{php echo $this->set['texts']['center']}"; </script>
+<script>
+    document.documentElement.style.fontSize =document.documentElement.clientWidth/750*40 +"px";
+</script>
+<script src="//at.alicdn.com/t/font_82607_6xtuyfrxik6v42t9.js"></script>
+<style type="text/css">
+	.icon1 {
+		width: .8rem; height: .8rem;
+		vertical-align: -0.15em;
+		fill: currentColor;
+		overflow: hidden;
+	}
+</style>
+{template 'commission/common'}
+<div class="fui-page fui-page-current page-commission-index ">
+	<div class="fui-header">
+		<div class="fui-header-left">
+			<a class="back" onclick='location.back()'></a>
+		</div>
+		<div class="title">{php echo $this->set['texts']['center']}</div>
+		<div class="fui-header-right"></div>
+	</div>
+    <div class='fui-content navbar'>
+	<div class="headinfo">
+	    <div class="userinfo" style="height: auto;">
+			<div class='fui-list'>
+				<div class='fui-list-info' style="width: 12rem">
+				<div class='title'>{$member['nickname']} </div>
+					<div class='text' >{php echo $this->set['texts']['up']}: {if empty($up)}
+						总店
+						{else}
+						{$up['nickname']}
+						{/if}
+						<br>
+					</div>
+					<div class='subtitle'  {if $this->set['levelurl']!=''}onclick='location.href="{php echo $this->set['levelurl']}"'{/if}>
+						{php echo empty($level) ? ( empty($this->set['levelname'])?'普通等级':$this->set['levelname'] ) : $level['levelname']}
+						{if $this->set['levelurl']!=''}<i class='icon icon-question' style='font-size:8px;'></i>{/if}
+					</div>
+				</div>
+			</div>
+		{if empty($this->set['closemyshop'])}
+			<a class="setbtn external" href="{php echo mobileUrl('commission/myshop/set')}"><i class="icon icon-shezhi"></i></a>
+		{/if}
+	    </div>
+	</div>
+		<div class="userblock">
+			<div class="line total new">
+				<div class="num">{php echo number_format($member['commission_pay'],2)}</div>
+				<div class="title">{php echo $this->set['texts']['commission_pay']}({php echo $this->set['texts']['yuan']})</div>
+			</div>
+			<div class="line usable new">
+
+				<div class="text">
+					<div class="num">{php echo number_format($member['commission_ok'],2)}</div>
+					<div class="title">{php echo $this->set['texts']['commission_ok']}({php echo $this->set['texts']['yuan']})</div>
+				</div>
+				{if $cansettle}
+				<a class="btn btn-warning external" href="{php echo mobileUrl('commission/withdraw')}"><span style="line-height: 1">佣金提现</span></a>
+				{else}
+				<div class="btn btn-warning disabled" onclick="FoxUI.toast.show('满1元才能提现!')">佣金体现</div>
+				{/if}
+			</div>
+		</div>
+	<div class="fui-block-group new col-2" style='overflow: hidden;'>
+            <a class="fui-block-child new  external" href="{php echo mobileUrl('commission/withdraw')}">
+                <div class="icon " style="color: #ff4357;"><i class="icon icon-qian"></i></div>
+                <div class="text new">
+					<div class="title">分销佣金</div>
+                    <div class=""><span>{php echo number_format($member['commission_total'],2)}</span> {php echo $this->set['texts']['yuan']}</div>
+				</div>
+            </a>
+            <a class="fui-block-child new external" href="{php echo mobileUrl('commission/order')}">
+                <div class="icon" style="color: #9ec9f4;"><i class="icon icon-dingdan2"></i></div>
+				<div class="text new">
+					<div class="title">分销订单</div>
+					<div class=""><span>{php echo number_format($member['ordercount0'],0)}</span> 笔</div>
+				</div>
+            </a>
+            <a class="fui-block-child new  external" href="{php echo mobileUrl('commission/log')}">
+                <div class="icon" style="color: #ffbe2e;"><i class="icon icon-tixian1"></i></div>
+				<div class="text new">
+					<div class="title">提现明细</div>
+					<div class=""><span>{php echo number_format($member['applycount'],0)}</span> 笔</div>
+				</div>
+            </a>
+            <a class="fui-block-child new  external" href="{php echo mobileUrl('commission/down')}">
+                <div class="icon "  style="color: #ff6e02;"><i class="icon icon-heilongjiangtubiao11"></i></div>
+				<div class="text new">
+					<div class="title">我的下线</div>
+					<div class=""><span>{php echo number_format($member['downcount'],0)}</span>人</div>
+				</div>
+            </a>
+
+	</div>
+		<a class="fui-cell-group" href="{php echo mobileUrl('commission/qrcode')}">
+			<div class="fui-cell">
+				<div class="fui-cell-icon ">
+					<i class="icon icon-erweima1 text-yellow"></i>
+				</div>
+				<div class="fui-cell-text">推广二维码</div>
+				<div class="fui-cell-remark" style="font-size: 0.5rem;"></div>
+			</div>
+		</a>
+    </div>
+
+{php $this->footerMenus()}
+
+</div>
+{template '_footer'}

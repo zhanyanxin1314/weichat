@@ -1,0 +1,106 @@
+{template '_header'}
+
+<link rel="stylesheet" type="text/css" href="../addons/ewei_shopv2/template/mobile/default/static/css/index.css"/>
+<style>
+    .fui-mask {
+        opacity: 1;
+    }
+	.order-success-header{
+		background: -moz-linear-gradient(left, #ffb43e 0%, #fd9526 100%);
+		background: -webkit-linear-gradient(left, #ffb43e 0%,#fd9526 100%);
+		background: -o-linear-gradient(left, #ffb43e 0%,#fd9526 100%);
+		background: -ms-linear-gradient(left, #ffb43e 0%,#fd9526 100%);
+		background: linear-gradient(to right, #ffb43e 0%,#fd9526 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffb43e, endColorstr=#fffd9526,gradientType='1');
+		-webkit-box-flex: 1;
+		-webkit-flex: 1;
+		-ms-flex: 1;
+		flex: 1;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		-webkit-align-items: center;
+		justify-content: center;
+		padding: 0 0.6rem;
+		font-size: 0.65rem;
+		line-height: 1.2rem;
+		height: 4rem;
+		color: #fff;
+	}
+</style>
+<div class='fui-page order-success-page pay'>
+
+	<div class="fui-header">
+		<div class="fui-header-left">
+			<a class="back" href="{php echo mobileUrl('order')}"></a>
+		</div>
+		<div class="title">
+			支付成功
+
+		</div>
+		<div class="fui-header-right" data-nomenu="true">&nbsp;</div>
+	</div>
+
+    <div class='fui-content'>
+	
+	<div class='fui-list-group result-list ' style="margin-top: 0;display: none">
+	    <div class='fui-list'>
+		<div class='fui-list-inner'>
+		    <div class='title'>
+				订单支付成功
+
+		    </div>
+		</div>
+	    </div>
+	</div>
+	<div class="order-success-header">
+		<div style="font-size: .85rem">
+			订单支付成功
+
+		</div>
+		<div class='text'>
+
+
+
+			{if !empty($address)&&empty($order['istrade'])}您的包裹整装待发{/if}
+
+
+		</div>
+	</div>
+	{if !empty($address)}
+	 
+	<div class='fui-list-group' >
+	    <div class='fui-list'>
+		<div class='fui-list-media'><i class="icon icon-dingwei"></i></div>
+		<div class='fui-list-inner'>
+			<div class='title'>联系人&nbsp;&nbsp;&nbsp;&nbsp;：{$address['realname']}</div>
+			<div class='title'>联系电话 ：{$address['mobile']}</div>
+		    <div class='text'>{$address['province']}{$address['city']}{$address['area']} {$address['address']}</div>
+		</div>
+	    </div>
+	</div>
+	{/if}
+	
+	<div class="fui-cell-group ">
+	    <div class="fui-cell">
+		<div class="fui-cell-label">实付金额</div>
+		<div class="fui-cell-info"></div>
+		<div class="fui-cell-remark noremark"><span class='text-danger'>￥{php echo number_format($order['price'],2)}</span></div>
+	    </div>
+	</div>
+	<div class='row'>
+	    <div class='col-50'>
+				<a class="btn btn-default external" href="{php echo mobileUrl()}" >返回首页</a>
+	    </div>
+	</div>
+	 
+    </div>
+
+	    <script language='javascript'>
+            require(['biz/order/success'], function (modal) {});
+        </script>
+</div>
+{template '_footer'}
